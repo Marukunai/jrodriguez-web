@@ -11,8 +11,13 @@
 </head>
 <body>
   <header>
-    <div class="brand">J RODRÍGUEZ</div>
-    <nav>
+    <div class="header-row">
+      <div class="brand">J RODRÍGUEZ</div>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav id="mainNav">
       <a href="/jrodriguez-web/index.html">Inicio</a>
       <a href="/jrodriguez-web/novedades.html">Novedades</a>
       <a href="/jrodriguez-web/newsletter.html">Newsletter</a>
@@ -35,6 +40,7 @@
   <footer>
     <p>Sitio de J Rodríguez · actualizado a mano en <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></p>
   </footer>
+  <script src="/jrodriguez-web/public/nav.js"></script>
   <script data-goatcounter="https://jrodriguezweb.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

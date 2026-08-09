@@ -17,8 +17,13 @@
 </head>
 <body>
   <header>
-    <div class="brand">J RODRÍGUEZ</div>
-    <nav>
+    <div class="header-row">
+      <div class="brand">J RODRÍGUEZ</div>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav id="mainNav">
       <a href="index.html">Inicio</a>
       <a href="novedades.html" class="active">Novedades</a>
       <a href="newsletter.html">Newsletter</a>
@@ -40,6 +45,7 @@
     <p>Sitio de J Rodríguez · actualizado a mano en <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></p>
   </footer>
 
+  <script src="public/nav.js"></script>
   <script src="public/youtube.js"></script>
   <script>
     /* Se usa solo si la YouTube API falla o la key aún no está puesta,
