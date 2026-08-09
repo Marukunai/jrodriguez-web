@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>J Rodríguez</title>
+  <meta name="description" content="J Rodríguez — música y vídeos. Escucha en Spotify y mira los últimos vídeos en YouTube." />
+  <link rel="stylesheet" href="/public/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">J RODRÍGUEZ</div>
+    <nav>
+      <a href="/" class="active">Inicio</a>
+      <a href="/novedades.html">Novedades</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Último vídeo</span>
+        <h1>J Rodríguez</h1>
+        <p class="genre">Reggaetón romántico</p>
+        <p class="bio">
+          J Rodríguez es un artista emergente de Barcelona de 23 años, cuya pasión
+          por la música urbana define cada paso de su trayectoria. Su estilo fusiona
+          reggaetón, trap y sonidos urbanos contemporáneos, reflejando su identidad y
+          las experiencias que lo inspiran día a día. A través de sus canciones busca
+          conectarse con el público, transmitir emociones reales y aportar una nueva
+          visión dentro de la escena urbana.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-youtube" href="https://www.youtube.com/@JRodriguezmusicc" target="_blank" rel="noopener">
+            ▶ Suscríbete en YouTube
+          </a>
+          <a class="btn btn-spotify" href="https://open.spotify.com/artist/3jFs75YtlY7jdZasxwNYAl" target="_blank" rel="noopener">
+            Escuchar en Spotify
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-video">
+        <iframe id="heroVideoFrame"
+          src="https://www.youtube.com/embed/n5-WrjoIK_U"
+          title="Último vídeo de J Rodríguez"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+    </section>
+
+    <div class="social-strip">
+      <a href="https://www.youtube.com/@JRodriguezmusicc" target="_blank" rel="noopener">
+        <img src="/public/icons/youtube_icon.svg" alt="" /> YouTube
+      </a>
+      <a href="https://open.spotify.com/artist/3jFs75YtlY7jdZasxwNYAl" target="_blank" rel="noopener">
+        <img src="/public/icons/spotify_icon.svg" alt="" /> Spotify
+      </a>
+      <a href="https://www.instagram.com/jrodriguezmusic/" target="_blank" rel="noopener">
+        <img src="/public/icons/instagram_icon.svg" alt="" /> Instagram
+      </a>
+    </div>
+
+    <section class="section">
+      <h2>Escucha</h2>
+      <div class="spotify-panel">
+        <iframe
+          src="https://open.spotify.com/embed/artist/3jFs75YtlY7jdZasxwNYAl?utm_source=jrodriguez_site"
+          width="100%" height="352" frameborder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy">
+        </iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Sitio de J Rodríguez · actualizado a mano en <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <script src="/public/youtube.js"></script>
+  <script>
+    // Sustituye el vídeo de portada por el último subido al canal.
+    // Si la API falla (o falta la key), se queda el vídeo de arriba tal cual.
+    (async () => {
+      try {
+        const [latest] = await ytGetLatestVideos(1);
+        if (latest) {
+          document.getElementById("heroVideoFrame").src = `https://www.youtube.com/embed/${latest.id}`;
+        }
+      } catch (err) {
+        console.warn("No se pudo cargar el último vídeo automáticamente:", err.message);
+      }
+    })();
+  </script>
+</body>
+</html>

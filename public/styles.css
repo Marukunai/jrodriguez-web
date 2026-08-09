@@ -1,0 +1,307 @@
+/* =========================================================
+   J RODRÍGUEZ — hoja de estilos
+   Paleta:
+     --bg        #0a0a0c  fondo principal
+     --surface   #141417  tarjetas / paneles
+     --line      #232327  bordes sutiles
+     --text      #f2f2f0  texto principal
+     --muted     #8d8d93  texto secundario
+     --spotify   #1db954  acento Spotify
+     --youtube   #ff2b3f  acento YouTube (protagonista)
+   Tipos:
+     display  -> 'Anton'         (titulares, cartel)
+     body     -> 'Manrope'       (texto)
+     mono     -> 'JetBrains Mono' (etiquetas, fechas, "on air")
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@500;600&display=swap');
+
+:root {
+  --bg: #0a0a0c;
+  --surface: #141417;
+  --surface-2: #1b1b1f;
+  --line: #232327;
+  --text: #f2f2f0;
+  --muted: #8d8d93;
+  --spotify: #1db954;
+  --youtube: #ff2b3f;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Manrope', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--youtube);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--youtube);
+  box-shadow: 0 0 0 3px rgba(255,43,63,0.18);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* ===== Header ===== */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.1rem 2rem;
+  background: rgba(10,10,12,0.86);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+header .brand {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+nav { display: flex; gap: 1.75rem; }
+
+nav a {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  transition: color 0.15s ease;
+}
+
+nav a:hover, nav a.active { color: var(--text); }
+
+/* ===== Hero ===== */
+.hero {
+  padding: 4rem 2rem 3rem;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.hero h1 {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  line-height: 0.95;
+  margin: 0.5rem 0 1rem;
+  text-transform: uppercase;
+}
+
+.hero .genre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 1.1rem;
+}
+
+.hero p.bio {
+  color: #cfcfd2;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  max-width: 46ch;
+  margin-bottom: 1.6rem;
+}
+
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.7rem 1.15rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.92rem;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn:hover { transform: translateY(-2px); }
+
+.btn-youtube { background: var(--youtube); color: #fff; }
+.btn-spotify { background: var(--spotify); color: #08170d; }
+.btn-ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--text);
+}
+.btn-ghost:hover { border-color: #444; }
+
+.hero-video {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6);
+}
+
+.hero-video iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+/* ===== Social strip ===== */
+.social-strip {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 2rem 3rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.social-strip a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.social-strip a:hover { color: var(--text); border-color: #3a3a3f; }
+.social-strip img { width: 18px; height: 18px; opacity: 0.9; }
+
+/* ===== Sections ===== */
+.section {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+}
+
+.section h2 {
+  font-family: 'Anton', sans-serif;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  letter-spacing: 0.02em;
+  margin: 0 0 1.4rem;
+}
+
+/* Spotify embed panel */
+.spotify-panel {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.spotify-panel iframe { display: block; border: 0; width: 100%; }
+
+/* ===== Novedades / release grid ===== */
+.release-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.release-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.release-card:hover { transform: translateY(-4px); border-color: #333338; }
+
+.release-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.release-thumb iframe,
+.release-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+  display: block;
+}
+
+.release-body { padding: 1rem 1.1rem 1.2rem; }
+
+.release-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.release-body h3 {
+  margin: 0 0 0.6rem;
+  font-size: 1.02rem;
+  line-height: 1.3;
+}
+
+.release-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+.release-actions a {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+}
+
+.release-actions .yt { background: rgba(255,43,63,0.14); color: #ff6b78; }
+.release-actions .sp { background: rgba(29,185,84,0.14); color: #3fe07a; }
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.82rem;
+  padding: 2.5rem 1rem 3rem;
+  border-top: 1px solid var(--line);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; padding-top: 2.5rem; }
+  header { padding: 1rem 1.2rem; }
+  .section, .social-strip { padding-left: 1.2rem; padding-right: 1.2rem; }
+}

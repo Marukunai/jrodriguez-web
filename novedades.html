@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Novedades — J Rodríguez</title>
+  <link rel="stylesheet" href="/public/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">J RODRÍGUEZ</div>
+    <nav>
+      <a href="/">Inicio</a>
+      <a href="/novedades.html" class="active">Novedades</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section" style="padding-top: 3rem;">
+      <span class="eyebrow">En emisión</span>
+      <h2 style="margin-top:0.6rem;">Vídeos y lanzamientos</h2>
+      <div id="releaseGrid" class="release-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Sitio de J Rodríguez · actualizado a mano en <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <script src="/public/youtube.js"></script>
+  <script>
+    /* Se usa solo si la YouTube API falla o la key aún no está puesta,
+       para que la página nunca se quede vacía. */
+    const FALLBACK_RELEASES = [
+      {
+        id: "n5-WrjoIK_U",
+        title: "J Rodriguez - TOP TEAM (Visualizer)",
+        publishedAt: "2026-07-18T00:00:00Z",
+        url: "https://www.youtube.com/watch?v=n5-WrjoIK_U"
+      }
+    ];
+
+    function formatDate(iso) {
+      return new Date(iso).toLocaleDateString("es-ES", { day: "2-digit", month: "short", year: "numeric" });
+    }
+
+    function renderCard(item) {
+      return `
+        <div class="release-card">
+          <div class="release-thumb">
+            <iframe
+              src="https://www.youtube.com/embed/${item.id}"
+              title="${item.title}"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              loading="lazy">
+            </iframe>
+          </div>
+          <div class="release-body">
+            <div class="release-meta">YouTube · ${formatDate(item.publishedAt)}</div>
+            <h3>${item.title}</h3>
+            <div class="release-actions">
+              <a class="yt" href="${item.url}" target="_blank" rel="noopener">Ver en YouTube</a>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    async function render() {
+      const grid = document.getElementById("releaseGrid");
+      let videos;
+      try {
+        videos = await ytGetLatestVideos(12);
+        if (!videos.length) throw new Error("El canal no devolvió vídeos.");
+      } catch (err) {
+        console.warn("No se pudo conectar con la YouTube API, mostrando vídeos de respaldo:", err.message);
+        videos = FALLBACK_RELEASES;
+      }
+      grid.innerHTML = videos.map(renderCard).join("");
+    }
+
+    render();
+  </script>
+</body>
+</html>
