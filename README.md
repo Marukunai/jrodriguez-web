@@ -1,6 +1,6 @@
 # Sitio de J Rodríguez
 
-Sitio estático (sin backend),
+Sitio estático (sin backend) basado en el diseño de tu web "cooperativa",
 adaptado a un solo artista y centrado en YouTube + Spotify.
 
 Al ser 100% estático, **no necesita servidor**: GitHub Pages lo sirve gratis
@@ -75,6 +75,82 @@ rompe: se queda con el vídeo/lista de respaldo que hay en el propio código
 ## Qué te queda por revisar (busca "TODO" en el código)
 
 - Pegar tu API key en `public/youtube.js` (paso 5 de arriba).
+
+## Formulario de contacto (`contacto.html`)
+
+Página nueva con formulario de booking/colaboración/prensa, conectado a
+[Formspree](https://formspree.io) (gratis, sin backend propio — envía el
+mensaje directo a tu email).
+
+1. Crea una cuenta gratis en formspree.io y un formulario nuevo con el
+   email donde quieres recibir los mensajes.
+2. Copia la URL que te dan (tipo `https://formspree.io/f/xxxxxxx`) y
+   pégala en `contacto.html`, en:
+   ```js
+   endpoint: "TU_FORMSPREE_ENDPOINT"
+   ```
+3. En el mismo archivo, sustituye las dos apariciones de
+   `TU_EMAIL_DE_CONTACTO` por el email real (es el enlace de "o escribe
+   directamente a...").
+
+Hasta que no pongas el endpoint real, el formulario avisa de que aún no
+está conectado en vez de fallar en silencio — así no se pierde ningún
+mensaje por error.
+
+## Favicon y vista previa al compartir (Open Graph)
+
+Ya está todo listo: `public/img/` tiene el favicon (`.ico` + PNGs) y una
+imagen de portada (`og-image.jpg`) que aparecerá cuando alguien comparta
+el link en WhatsApp, Instagram, Twitter/X, etc. Si más adelante quieres
+cambiar esa imagen por una foto real del artista, sustituye
+`public/img/og-image.jpg` por otra de **1200×630 px** con el mismo nombre.
+
+## Newsletter (`newsletter.html`)
+
+Página nueva para que la gente se apunte con su email, con el mismo
+sistema que Contacto (Formspree). Como es un uso distinto (lista de
+suscriptores vs. mensajes de booking), usa **un formulario de Formspree
+separado**:
+
+1. En tu cuenta de Formspree, crea un formulario nuevo, por ejemplo
+   "Newsletter J Rodriguez".
+2. Copia su endpoint y pégalo en `newsletter.html`, en:
+   ```js
+   endpoint: "TU_FORMSPREE_ENDPOINT_NEWSLETTER"
+   ```
+
+## Página 404 personalizada
+
+`404.html` en la raíz del repo — GitHub Pages la sirve automáticamente
+para cualquier URL rota. A diferencia del resto del sitio, sus rutas son
+**absolutas con el nombre del repo** (`/jrodriguez-web/...`) a propósito:
+es la única página donde hace falta, porque una URL rota puede estar en
+cualquier "profundidad" y las rutas relativas fallarían. Si algún día
+renombras el repo, hay que actualizar esas rutas en este archivo (y solo
+en este).
+
+## robots.txt y sitemap.xml
+
+En la raíz del repo, ayudan a que Google indexe bien la web. No hace
+falta tocarlos salvo que añadas páginas nuevas — en ese caso, añade la
+URL nueva dentro de `sitemap.xml` siguiendo el mismo patrón.
+
+## Panel de estadísticas privado (GoatCounter)
+
+Todas las páginas ya tienen el script de seguimiento puesto, apuntando a
+un placeholder:
+```html
+<script data-goatcounter="https://TU_CODIGO_GOATCOUNTER.goatcounter.com/count" ...>
+```
+
+1. Crea una cuenta gratis en [goatcounter.com](https://www.goatcounter.com)
+   y elige un "site code" (ej. `jrodriguezweb`).
+2. Sustituye `TU_CODIGO_GOATCOUNTER` por ese código en los 5 archivos
+   HTML (búscalo con Ctrl+F/Buscar en cada uno, es la misma línea en
+   todos).
+3. Entra en `https://TU_CODIGO.goatcounter.com` con tu login para ver
+   las visitas — ese panel es privado, nadie más puede acceder sin tu
+   contraseña.
 
 3. **public/icons/**
    - Si más adelante quieres sustituir los SVG por logos reales, basta con

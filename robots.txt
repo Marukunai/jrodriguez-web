@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://marukunai.github.io/jrodriguez-web/sitemap.xml

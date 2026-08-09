@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Newsletter — J Rodríguez</title>
+  <meta name="description" content="Apúntate para enterarte antes que nadie de los nuevos lanzamientos de J Rodríguez." />
+  <link rel="icon" href="public/img/favicon.ico" sizes="any" />
+  <link rel="icon" href="public/img/favicon-32.png" type="image/png" />
+  <link rel="apple-touch-icon" href="public/img/apple-touch-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Newsletter — J Rodríguez" />
+  <meta property="og:description" content="Apúntate para enterarte antes que nadie de los nuevos lanzamientos." />
+  <meta property="og:image" content="https://marukunai.github.io/jrodriguez-web/public/img/og-image.jpg" />
+  <meta property="og:url" content="https://marukunai.github.io/jrodriguez-web/newsletter.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="public/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">J RODRÍGUEZ</div>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="novedades.html">Novedades</a>
+      <a href="newsletter.html" class="active">Newsletter</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section" style="padding-top: 3rem; max-width: 560px;">
+      <span class="eyebrow">Entérate antes que nadie</span>
+      <h2 style="margin-top:0.6rem;">Newsletter</h2>
+      <p style="color:#cfcfd2; margin-bottom: 2rem;">
+        Apúntate con tu email y te avisamos en cuanto salga una canción o
+        vídeo nuevo — sin depender de que el algoritmo de turno te lo
+        enseñe o no.
+      </p>
+
+      <form id="newsletterForm" class="contact-form">
+        <input type="hidden" name="_subject" value="Nueva suscripción a la newsletter de J Rodríguez" />
+
+        <div class="form-row">
+          <label for="nl-email">Email</label>
+          <input type="email" id="nl-email" name="email" required />
+        </div>
+
+        <!-- Campo trampa anti-spam -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+        <button type="submit" class="btn btn-spotify">Apuntarme</button>
+        <p id="formStatus" class="form-status"></p>
+      </form>
+
+      <p class="contact-fallback">
+        Nunca spam, solo avisos de música nueva. Puedes darte de baja
+        cuando quieras.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Sitio de J Rodríguez · actualizado a mano en <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <script>
+    /* =========================================================
+       CONFIGURACIÓN
+       Crea un formulario NUEVO y separado en tu cuenta de
+       Formspree (el mismo sitio que usaste para Contacto) llamado
+       algo como "Newsletter J Rodriguez", y pega aquí su endpoint.
+       Así las suscripciones no se mezclan con los mensajes de booking.
+       ========================================================= */
+    const FORM_CONFIG = {
+      endpoint: "https://formspree.io/f/meajaazl" // TODO: pega el endpoint del formulario de newsletter
+    };
+
+    const form = document.getElementById("newsletterForm");
+    const status = document.getElementById("formStatus");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (FORM_CONFIG.endpoint.includes("TU_FORMSPREE_ENDPOINT_NEWSLETTER")) {
+        status.textContent = "La newsletter todavía no está conectada.";
+        status.className = "form-status error";
+        return;
+      }
+
+      const submitBtn = form.querySelector("button[type=submit]");
+      submitBtn.disabled = true;
+      status.textContent = "Enviando…";
+      status.className = "form-status";
+
+      try {
+        const res = await fetch(FORM_CONFIG.endpoint, {
+          method: "POST",
+          headers: { "Accept": "application/json" },
+          body: new FormData(form)
+        });
+
+        if (res.ok) {
+          status.textContent = "¡Listo! Ya estás dentro.";
+          status.className = "form-status success";
+          form.reset();
+        } else {
+          throw new Error("Formspree devolvió un error");
+        }
+      } catch (err) {
+        status.textContent = "No se pudo apuntar. Prueba de nuevo en un momento.";
+        status.className = "form-status error";
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+  <script data-goatcounter="https://jrodriguezweb.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
