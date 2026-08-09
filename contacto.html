@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contacto — J Rodríguez</title>
+  <link rel="stylesheet" href="public/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">J RODRÍGUEZ</div>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="novedades.html">Novedades</a>
+      <a href="contacto.html" class="active">Contacto</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section" style="padding-top: 3rem; max-width: 620px;">
+      <span class="eyebrow">Booking · Colaboraciones · Prensa</span>
+      <h2 style="margin-top:0.6rem;">Contacto</h2>
+      <p style="color:#cfcfd2; margin-bottom: 2rem;">
+        ¿Quieres contratar a J Rodríguez, proponerle una colaboración o
+        hablar con él para prensa? Escribe aquí y te responderá lo antes
+        posible.
+      </p>
+
+      <form id="contactForm" class="contact-form">
+        <input type="hidden" name="_subject" value="Nuevo mensaje desde la web de J Rodríguez" />
+
+        <div class="form-row">
+          <label for="name">Nombre</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <div class="form-row">
+          <label for="reason">Motivo</label>
+          <select id="reason" name="motivo" required>
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="Booking / actuación">Booking / actuación</option>
+            <option value="Colaboración">Colaboración</option>
+            <option value="Prensa">Prensa</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="message">Mensaje</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+
+        <!-- Campo trampa anti-spam: invisible para personas, los bots lo rellenan -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+        <button type="submit" class="btn btn-youtube">Enviar mensaje</button>
+        <p id="formStatus" class="form-status"></p>
+      </form>
+
+      <p class="contact-fallback">
+        O escribe directamente a
+        <a href="mailto:marukunai03@gmail.com">marukunai03@gmail.com</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Sitio de J Rodríguez · actualizado a mano en <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <script>
+    /* =========================================================
+       CONFIGURACIÓN DEL FORMULARIO
+       1. Crea una cuenta gratis en https://formspree.io y un
+          formulario nuevo (ver README.md para el paso a paso).
+       2. Pega aquí abajo la URL que te dan (algo tipo
+          "https://formspree.io/f/xxxxxxx").
+       ========================================================= */
+    const FORM_CONFIG = {
+      endpoint: "https://formspree.io/f/xwlelpzq"
+    };
+
+    const form = document.getElementById("contactForm");
+    const status = document.getElementById("formStatus");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (FORM_CONFIG.endpoint.includes("TU_FORMSPREE_ENDPOINT")) {
+        status.textContent = "El formulario todavía no está conectado. Escríbenos por email mientras tanto.";
+        status.className = "form-status error";
+        return;
+      }
+
+      const submitBtn = form.querySelector("button[type=submit]");
+      submitBtn.disabled = true;
+      status.textContent = "Enviando…";
+      status.className = "form-status";
+
+      try {
+        const res = await fetch(FORM_CONFIG.endpoint, {
+          method: "POST",
+          headers: { "Accept": "application/json" },
+          body: new FormData(form)
+        });
+
+        if (res.ok) {
+          status.textContent = "¡Mensaje enviado! Te responderá lo antes posible.";
+          status.className = "form-status success";
+          form.reset();
+        } else {
+          throw new Error("Formspree devolvió un error");
+        }
+      } catch (err) {
+        status.textContent = "No se pudo enviar. Prueba de nuevo o escribe por email directamente.";
+        status.className = "form-status error";
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

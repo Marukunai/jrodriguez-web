@@ -12,11 +12,14 @@
     <nav>
       <a href="index.html">Inicio</a>
       <a href="novedades.html" class="active">Novedades</a>
+      <a href="contacto.html">Contacto</a>
     </nav>
   </header>
 
   <main>
     <section class="section" style="padding-top: 3rem;">
+      <div id="upcomingSection"></div>
+
       <span class="eyebrow">En emisión</span>
       <h2 style="margin-top:0.6rem;">Vídeos y lanzamientos</h2>
       <div id="releaseGrid" class="release-grid"></div>
@@ -79,7 +82,45 @@
       grid.innerHTML = videos.map(renderCard).join("");
     }
 
+    function formatCountdown(iso) {
+      const diffMs = new Date(iso).getTime() - Date.now();
+      if (diffMs <= 0) return "Estrenando…";
+      const days = Math.floor(diffMs / 86400000);
+      const hours = Math.floor((diffMs % 86400000) / 3600000);
+      if (days > 0) return `Estreno en ${days}d ${hours}h`;
+      const minutes = Math.floor((diffMs % 3600000) / 60000);
+      return `Estreno en ${hours}h ${minutes}min`;
+    }
+
+    function formatFullDate(iso) {
+      return new Date(iso).toLocaleString("es-ES", {
+        day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit"
+      });
+    }
+
+    async function renderUpcoming() {
+      const box = document.getElementById("upcomingSection");
+      try {
+        const [next] = await ytGetUpcomingPremieres();
+        if (!next) return; // no hay nada programado: la sección no aparece
+
+        box.innerHTML = `
+          <div class="upcoming-banner">
+            <img src="${next.thumbnail}" alt="${next.title}" />
+            <div class="upcoming-text">
+              <span class="eyebrow">Próximo estreno</span>
+              <h3>${next.title}</h3>
+              <div class="upcoming-countdown">${formatCountdown(next.scheduledStartTime)} · ${formatFullDate(next.scheduledStartTime)}</div>
+            </div>
+          </div>`;
+      } catch (err) {
+        console.warn("No se pudo comprobar si hay preavances:", err.message);
+        // si falla, simplemente no se muestra nada — no rompe el resto de la página
+      }
+    }
+
     render();
+    renderUpcoming();
   </script>
 </body>
 </html>
