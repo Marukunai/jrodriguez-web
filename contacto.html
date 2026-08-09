@@ -73,6 +73,11 @@
         <!-- Campo trampa anti-spam: invisible para personas, los bots lo rellenan -->
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
 
+        <label class="consent-row">
+          <input type="checkbox" name="consentimiento" required />
+          <span>He leído y acepto la <a href="privacidad.html" target="_blank" rel="noopener">política de privacidad</a>.</span>
+        </label>
+
         <button type="submit" class="btn btn-youtube">Enviar mensaje</button>
         <p id="formStatus" class="form-status"></p>
       </form>
@@ -85,7 +90,7 @@
   </main>
 
   <footer>
-    <p>Sitio de J Rodríguez · actualizado a mano en <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></p>
+    <p>Sitio de J Rodríguez · <a href="privacidad.html">Aviso legal y privacidad</a> · actualizado a mano en <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></p>
   </footer>
 
   <script>
@@ -97,7 +102,7 @@
           "https://formspree.io/f/xxxxxxx").
        ========================================================= */
     const FORM_CONFIG = {
-      endpoint: "https://formspree.io/f/xwlelpzq"
+      endpoint: "https://formspree.io/f/xwlelpzq" // TODO: pega el endpoint del formulario de contacto
     };
 
     const form = document.getElementById("contactForm");

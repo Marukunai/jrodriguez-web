@@ -152,6 +152,26 @@ un placeholder:
    las visitas — ese panel es privado, nadie más puede acceder sin tu
    contraseña.
 
+## Aviso legal y política de privacidad (`privacidad.html`)
+
+Página nueva, enlazada en el pie de todas las páginas. Cubre lo esencial
+de forma honesta (qué datos se recogen en Contacto/Newsletter, para qué,
+con quién se comparten — Formspree — y la analítica sin cookies de
+GoatCounter). **No es asesoramiento legal real**, es una plantilla
+razonable; si en algún momento hay contratos/dinero de verdad de por
+medio, merece la pena que alguien con conocimientos legales la revise.
+
+Antes de subir, rellena en `privacidad.html`:
+```
+TU_NOMBRE_COMPLETO
+```
+con el nombre real de quien figura como responsable del sitio.
+
+Los formularios de Contacto y Newsletter ahora piden marcar una casilla
+de "He leído y acepto la política de privacidad" antes de poder enviar
+— es lo correcto de cara a un consentimiento explícito real, no solo
+tener la página existiendo sin enlazar a ningún sitio.
+
 3. **public/icons/**
    - Si más adelante quieres sustituir los SVG por logos reales, basta con
      reemplazar los archivos manteniendo el mismo nombre.
