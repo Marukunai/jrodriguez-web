@@ -12,7 +12,7 @@
    ========================================================= */
 
 const YT_CONFIG = {
-  apiKey: "TU_YOUTUBE_API_KEY", // TODO: pega tu API key (restringida por dominio)
+  apiKey: "AIzaSyAO89nQHdPl8BIy0Cb2kP1e1jrAK4IBqTw", // TODO: pega tu API key (restringida por dominio)
   handle: "JRodriguezmusicc"    // handle del canal, sin la @
 };
 
