@@ -257,6 +257,26 @@ nav a:hover, nav a.active { color: var(--text); }
 .social-strip a:hover { color: var(--text); border-color: #3a3a3f; }
 .social-strip img { width: 18px; height: 18px; opacity: 0.9; }
 
+/* ===== Saltar al contenido (accesibilidad teclado) ===== */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 100;
+  background: var(--youtube);
+  color: #fff;
+  padding: 0.7rem 1.1rem;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
 /* ===== Sections ===== */
 .section {
   max-width: 1180px;
@@ -512,6 +532,7 @@ nav a:hover, nav a.active { color: var(--text); }
 .form-row select:focus,
 .form-row textarea:focus {
   border-color: var(--youtube);
+  box-shadow: 0 0 0 3px rgba(255,43,63,0.28);
 }
 
 .form-row textarea { resize: vertical; }
@@ -577,6 +598,59 @@ nav a:hover, nav a.active { color: var(--text); }
   border-radius: 10px;
   border: 1px solid var(--line);
   flex-shrink: 0;
+}
+
+/* ===== Próximas actuaciones ===== */
+.event-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+
+.event-row {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  padding: 1.3rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.event-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--youtube);
+  min-width: 130px;
+  flex-shrink: 0;
+}
+
+.event-info { flex: 1; min-width: 0; }
+
+.event-info h3 { margin: 0 0 0.2rem; font-size: 1.02rem; }
+
+.event-info p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.event-row .btn {
+  flex-shrink: 0;
+  padding: 0.55rem 1rem;
+  font-size: 0.82rem;
+}
+
+.event-empty {
+  padding: 2.5rem 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+.event-empty p { margin: 0 0 1.2rem; }
+
+@media (max-width: 640px) {
+  .event-row { flex-wrap: wrap; }
+  .event-date { min-width: auto; }
+  .event-row .btn { width: 100%; text-align: center; }
 }
 
 /* ===== Footer ===== */

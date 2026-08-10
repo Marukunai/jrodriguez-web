@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Actuaciones — J Rodriguez</title>
+  <meta name="description" content="Próximas actuaciones y conciertos de J Rodriguez." />
+  <link rel="icon" href="public/img/favicon.ico" sizes="any" />
+  <link rel="icon" href="public/img/favicon-32.png" type="image/png" />
+  <link rel="apple-touch-icon" href="public/img/apple-touch-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Actuaciones — J Rodriguez" />
+  <meta property="og:description" content="Próximas actuaciones y conciertos de J Rodriguez." />
+  <meta property="og:image" content="https://marukunai.github.io/jrodriguez-web/public/img/og-image.jpg" />
+  <meta property="og:url" content="https://marukunai.github.io/jrodriguez-web/eventos.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="public/styles.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+  <header>
+    <div class="header-row">
+      <div class="brand">J RODRIGUEZ</div>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav id="mainNav">
+      <a href="index.html">Inicio</a>
+      <a href="novedades.html">Novedades</a>
+      <a href="newsletter.html">Newsletter</a>
+      <a href="eventos.html" class="active">Actuaciones</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="section" style="padding-top: 3rem; max-width: 780px;">
+      <span class="eyebrow">En directo</span>
+      <h2 style="margin-top:0.6rem;">Próximas actuaciones</h2>
+
+      <div id="eventList" class="event-list"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Sitio de J Rodriguez · <a href="privacidad.html">Aviso legal y privacidad</a> · actualizado a mano en <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <script src="public/nav.js"></script>
+  <script>
+    /* =========================================================
+       PRÓXIMAS ACTUACIONES — lista a mano, sin API ni backend.
+       Añade un objeto por cada fecha confirmada, con este formato:
+
+       {
+         date: "2026-09-20",       // AAAA-MM-DD, para que se ordene bien
+         venue: "Sala Apolo",
+         city: "Barcelona",
+         info: "Puertas 21:30 · Entrada anticipada 12€",  // opcional
+         ticketsUrl: "https://..."  // opcional, si hay venta de entradas
+       }
+
+       Bórralas cuando pase la fecha, o déjalas si quieres mantener un
+       histórico (en ese caso habría que separar "próximas" de
+       "pasadas", pero de momento no hace falta).
+       ========================================================= */
+    const EVENTS = [
+      // Ejemplo (bórralo cuando añadas el primero real):
+      // {
+      //   date: "2026-09-20",
+      //   venue: "Sala Apolo",
+      //   city: "Barcelona",
+      //   info: "Puertas 21:30",
+      //   ticketsUrl: "https://example.com/entradas"
+      // },
+    ];
+
+    function formatEventDate(iso) {
+      const d = new Date(iso + "T00:00:00");
+      return d.toLocaleDateString("es-ES", { day: "2-digit", month: "short", year: "numeric" }).toUpperCase();
+    }
+
+    function renderEvents() {
+      const container = document.getElementById("eventList");
+
+      if (!EVENTS.length) {
+        container.innerHTML = `
+          <div class="event-empty">
+            <p>Todavía no hay actuaciones anunciadas.</p>
+            <a class="btn btn-youtube" href="newsletter.html">Apúntate para enterarte el primero</a>
+          </div>`;
+        return;
+      }
+
+      const sorted = [...EVENTS].sort((a, b) => new Date(a.date) - new Date(b.date));
+      container.innerHTML = sorted.map(ev => `
+        <div class="event-row">
+          <div class="event-date">${formatEventDate(ev.date)}</div>
+          <div class="event-info">
+            <h3>${ev.venue} — ${ev.city}</h3>
+            ${ev.info ? `<p>${ev.info}</p>` : ""}
+          </div>
+          ${ev.ticketsUrl
+            ? `<a class="btn btn-youtube" href="${ev.ticketsUrl}" target="_blank" rel="noopener">Entradas</a>`
+            : `<a class="btn btn-ghost" href="contacto.html">Más info</a>`}
+        </div>
+      `).join("");
+    }
+
+    renderEvents();
+  </script>
+  <script data-goatcounter="https://jrodriguezweb.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
