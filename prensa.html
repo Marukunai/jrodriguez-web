@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kit de prensa — J Rodríguez</title>
+  <meta name="description" content="Material de prensa de J Rodríguez: biografía, fotos y logo para promotores y medios." />
+  <link rel="icon" href="public/img/favicon.ico" sizes="any" />
+  <link rel="icon" href="public/img/favicon-32.png" type="image/png" />
+  <link rel="apple-touch-icon" href="public/img/apple-touch-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Kit de prensa — J Rodríguez" />
+  <meta property="og:description" content="Biografía, fotos y logo en alta resolución para promotores, salas y medios." />
+  <meta property="og:image" content="https://marukunai.github.io/jrodriguez-web/public/img/og-image.jpg" />
+  <meta property="og:url" content="https://marukunai.github.io/jrodriguez-web/prensa.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="public/styles.css" />
+  <style>
+    .press-photos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0 2.5rem;
+    }
+    .press-photo {
+      aspect-ratio: 4/5;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-align: center;
+      padding: 1rem;
+    }
+    .download-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 1.5rem 0 2.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-row">
+      <div class="brand">J RODRÍGUEZ</div>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav id="mainNav">
+      <a href="index.html">Inicio</a>
+      <a href="novedades.html">Novedades</a>
+      <a href="newsletter.html">Newsletter</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section" style="padding-top: 3rem; max-width: 820px;">
+      <span class="eyebrow">Para promotores, salas y medios</span>
+      <h2 style="margin-top:0.6rem;">Kit de prensa</h2>
+
+      <!-- ===== BIOGRAFÍA LARGA =====
+           TODO: sustituir por una bio extendida de verdad (200-400 palabras),
+           más detallada que la de la portada: trayectoria, influencias,
+           hitos, próximos proyectos. -->
+      <h3 style="font-family:'Anton', sans-serif; text-transform:uppercase; margin-top:2rem;">Biografía</h3>
+      <p style="color:#cfcfd2; line-height:1.7;">
+        [TODO: bio larga pendiente — de momento se puede reutilizar la de
+        la portada, pero para un kit de prensa de verdad conviene una
+        versión más extensa y con más detalle de trayectoria.]
+      </p>
+
+      <!-- ===== FOTOS =====
+           TODO: sustituir estos placeholders por <img> reales cuando haya
+           fotos profesionales. Formato recomendado: retrato + foto en
+           directo/estudio, resolución alta (mínimo 2000px de ancho) para
+           que los promotores puedan usarlas en carteles. -->
+      <h3 style="font-family:'Anton', sans-serif; text-transform:uppercase;">Fotos</h3>
+      <div class="press-photos">
+        <div class="press-photo">Foto pendiente<br />(retrato)</div>
+        <div class="press-photo">Foto pendiente<br />(directo/estudio)</div>
+        <div class="press-photo">Foto pendiente<br />(promocional)</div>
+      </div>
+
+      <!-- ===== DESCARGAS =====
+           TODO: enlazar a los archivos reales una vez existan
+           (súbelos a public/press/ y apunta el href ahí). -->
+      <h3 style="font-family:'Anton', sans-serif; text-transform:uppercase;">Descargas</h3>
+      <div class="download-row">
+        <a class="btn btn-ghost" href="#" aria-disabled="true">Fotos en alta (.zip) — pendiente</a>
+        <a class="btn btn-ghost" href="#" aria-disabled="true">Logo (.png/.svg) — pendiente</a>
+        <a class="btn btn-ghost" href="#" aria-disabled="true">Bio en PDF — pendiente</a>
+      </div>
+
+      <p style="color:var(--muted); font-size:0.88rem;">
+        ¿Necesitas algo que no esté aquí? Escribe directamente a
+        <a href="mailto:marukunai03@gmail.com">marukunai03@gmail.com</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Sitio de J Rodríguez · <a href="privacidad.html">Aviso legal y privacidad</a> · actualizado a mano en <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <script src="public/nav.js"></script>
+  <script data-goatcounter="https://jrodriguezweb.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

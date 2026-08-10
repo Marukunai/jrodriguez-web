@@ -1,5 +1,5 @@
 /* =========================================================
-   J Rodriguez — hoja de estilos
+   J RODRÍGUEZ — hoja de estilos
    Paleta:
      --bg        #0a0a0c  fondo principal
      --surface   #141417  tarjetas / paneles
@@ -345,6 +345,61 @@ nav a:hover, nav a.active { color: var(--text); }
 .release-actions .yt { background: rgba(255,43,63,0.14); color: #ff6b78; }
 .release-actions .sp { background: rgba(29,185,84,0.14); color: #3fe07a; }
 
+.release-actions .share-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.release-actions .share-btn:hover { color: var(--text); border-color: #444; }
+.release-actions .share-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* ===== Compartir la web (bloque genérico, portada) ===== */
+.share-block {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 2rem 3rem;
+}
+
+.share-block-inner {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.share-block-inner p {
+  margin: 0;
+  color: #cfcfd2;
+  font-size: 0.92rem;
+}
+
+.share-row { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+
+.share-row a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: border-color 0.15s ease;
+}
+
+.share-row a:hover { border-color: #444; }
+.share-row a svg { width: 15px; height: 15px; }
+
 /* ===== Top Canciones (ranking por vistas) ===== */
 .top-grid {
   display: grid;
@@ -506,6 +561,23 @@ nav a:hover, nav a.active { color: var(--text); }
 }
 
 .contact-fallback a { color: var(--youtube); font-weight: 700; text-decoration: none; }
+
+.qr-block {
+  margin-top: 2rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.qr-block img {
+  width: 88px;
+  height: 88px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  flex-shrink: 0;
+}
 
 /* ===== Footer ===== */
 footer {
