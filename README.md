@@ -1,4 +1,4 @@
-# Sitio de J Rodríguez
+# Sitio de J Rodriguez
 
 Sitio estático (sin backend) basado en el diseño de tu web "cooperativa",
 adaptado a un solo artista y centrado en YouTube + Spotify.
