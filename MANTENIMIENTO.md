@@ -183,3 +183,41 @@ Si algo tiene escrita la palabra **"jrodriguez-web"** entera dentro del
 código → hay que cambiarla. Si un enlace es corto y relativo (tipo
 `href="novedades.html"`, sin `https://` delante) → no hay que tocarlo,
 sigue funcionando solo.
+
+---
+
+## 8. Colaboraciones con otros artistas (vídeos que no salen solos)
+
+La web trae los vídeos automáticamente **solo del canal de YouTube de
+J Rodriguez**. Si hace una colaboración y el vídeo queda subido en el
+canal del OTRO artista (aunque salga como "Fulano X J Rodriguez" en el
+título, o YouTube junte los dos nombres arriba), ese vídeo **no va a
+aparecer solo** — la web no tiene forma de saber que existe.
+
+Esto ya pasó con "Salamandra" (colaboración con Jeyci RF, subida en su
+canal) y seguramente vuelva a pasar.
+
+**Cómo saber si un vídeo es de "los suyos" o de una colaboración
+subida en otro canal:** entra al vídeo en YouTube y mira el nombre justo
+debajo del título — si no es su canal (`@JRodriguezmusicc`), es una
+colaboración y hay que añadirla a mano.
+
+**Cómo añadirla:**
+
+1. Abre `novedades.html` y busca `MANUAL_EXTRAS` (está cerca del
+   principio del `<script>`, con comentarios explicando el formato).
+2. Copia un bloque como el de "Salamandra" que ya hay ahí, y cambia:
+   - `id` → el código del vídeo (la parte después de `watch?v=` en la URL)
+   - `title` → el título tal cual aparece en YouTube
+   - `publishedAt` → la fecha de estreno (se puede ver debajo del título
+     del vídeo en YouTube, formato `AAAA-MM-DDT00:00:00Z`)
+   - `url` → la URL completa del vídeo
+3. Guarda y sube el archivo. Aparecerá mezclado con el resto de vídeos
+   en Novedades, ordenado por fecha junto a todos los demás — no hace
+   falta ponerlo en ningún sitio en concreto de la lista.
+
+**Esto NO afecta al ranking de "Top Canciones"** de la portada — ese
+ranking se calcula solo con las vistas reales de su canal vía API, así
+que las colaboraciones de otros canales no entran ahí (para no tener un
+número de vistas fijo que se quede desactualizado). Solo aparecen en
+Novedades.

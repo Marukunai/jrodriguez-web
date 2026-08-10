@@ -139,6 +139,11 @@
         <p style="color:var(--muted)">Cargando ranking…</p>
       </div>
     </section>
+
+    <section class="section" id="collabsSection" style="display:none;">
+      <h2>Colaboraciones</h2>
+      <div id="collabsGrid" class="top-grid"></div>
+    </section>
   </main>
 
   <footer>
@@ -147,6 +152,7 @@
 
   <script src="public/nav.js"></script>
   <script src="public/youtube.js"></script>
+  <script src="public/collabs.js"></script>
   <script>
     // Sustituye el vídeo de portada por el último subido al canal.
     // Si la API falla (o falta la key), se queda el vídeo de arriba tal cual.
@@ -161,20 +167,37 @@
       }
     })();
 
-    // Top 3 vídeos por número de reproducciones.
+    // Top 3 vídeos por número de reproducciones — compite de verdad
+    // (con vistas reales, no fijas) entre sus propios vídeos y las
+    // colaboraciones subidas en otros canales.
     (async () => {
       const grid = document.getElementById("topGrid");
       try {
-        const top = await ytGetTopVideosByViews(3);
-        if (!top.length) throw new Error("Sin datos de ranking.");
-        grid.innerHTML = top.map((item, i) => `
+        const [ownTop, collabStats] = await Promise.all([
+          ytGetTopVideosByViews(10),
+          MANUAL_COLLABS.length ? ytGetVideoStatsById(MANUAL_COLLABS.map(c => c.id)) : Promise.resolve([])
+        ]);
+
+        const collabMeta = Object.fromEntries(MANUAL_COLLABS.map(c => [c.id, c]));
+        const collabEntries = collabStats.map(s => ({
+          ...s,
+          withArtist: collabMeta[s.id]?.withArtist || null
+        }));
+
+        const merged = [...ownTop, ...collabEntries]
+          .sort((a, b) => b.views - a.views)
+          .slice(0, 5); // Top 5
+
+        if (!merged.length) throw new Error("Sin datos de ranking.");
+
+        grid.innerHTML = merged.map((item, i) => `
           <div class="top-card">
             <span class="top-rank">#${i + 1}</span>
             <div class="release-thumb">
               <img src="https://i.ytimg.com/vi/${item.id}/hqdefault.jpg" alt="${item.title}" />
             </div>
             <div class="release-body">
-              <div class="top-views">${item.views.toLocaleString("es-ES")} reproducciones</div>
+              <div class="top-views">${item.views.toLocaleString("es-ES")} reproducciones${item.withArtist ? ` · con ${item.withArtist}` : ""}</div>
               <h3>${item.title}</h3>
               <div class="release-actions">
                 <a class="yt" href="${item.url}" target="_blank" rel="noopener">Ver en YouTube</a>
@@ -186,6 +209,43 @@
         console.warn("No se pudo cargar el ranking:", err.message);
         grid.innerHTML = "";
         grid.closest("section").style.display = "none";
+      }
+    })();
+
+    // Sección "Colaboraciones" — solo se muestra si hay alguna en
+    // MANUAL_COLLABS. Trae vistas reales por API si puede; si falla,
+    // se muestra igualmente sin el número de vistas.
+    (async () => {
+      if (!MANUAL_COLLABS.length) return;
+
+      const section = document.getElementById("collabsSection");
+      const grid = document.getElementById("collabsGrid");
+      section.style.display = "";
+
+      function renderCollabCard(c, views) {
+        return `
+          <div class="top-card">
+            <span class="top-rank" style="font-size:0.78rem;">🤝 COLAB</span>
+            <div class="release-thumb">
+              <img src="https://i.ytimg.com/vi/${c.id}/hqdefault.jpg" alt="${c.title}" />
+            </div>
+            <div class="release-body">
+              <div class="top-views">${views ? `${views.toLocaleString("es-ES")} reproducciones · ` : ""}con ${c.withArtist}</div>
+              <h3>${c.title}</h3>
+              <div class="release-actions">
+                <a class="yt" href="${c.url}" target="_blank" rel="noopener">Ver en YouTube</a>
+              </div>
+            </div>
+          </div>`;
+      }
+
+      try {
+        const stats = await ytGetVideoStatsById(MANUAL_COLLABS.map(c => c.id));
+        const statsMap = Object.fromEntries(stats.map(s => [s.id, s.views]));
+        grid.innerHTML = MANUAL_COLLABS.map(c => renderCollabCard(c, statsMap[c.id])).join("");
+      } catch (err) {
+        console.warn("No se pudieron cargar las vistas de colaboraciones:", err.message);
+        grid.innerHTML = MANUAL_COLLABS.map(c => renderCollabCard(c, null)).join("");
       }
     })();
   </script>

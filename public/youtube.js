@@ -102,9 +102,9 @@ async function ytGetLatestVideos(maxResults = 8) {
  * Top vídeos del canal por número de reproducciones.
  * Mira hasta los últimos 50 vídeos subidos y devuelve los N con más vistas.
  * Cacheado 45 min: es una llamada algo más cara (dos peticiones).
- * @param {number} maxResults - cuántos poner en el ranking (ej. 3)
+ * @param {number} maxResults - cuántos poner en el ranking (ej. 5)
  */
-async function ytGetTopVideosByViews(maxResults = 3) {
+async function ytGetTopVideosByViews(maxResults = 5) { 
   return ytCached(`top_views_${maxResults}`, 45, async () => {
     const playlistId = await ytGetUploadsPlaylistId();
 
@@ -178,4 +178,30 @@ async function ytGetUpcomingPremieres() {
       }))
       .sort((a, b) => new Date(a.scheduledStartTime) - new Date(b.scheduledStartTime));
   });
+}
+
+/**
+ * Devuelve las estadísticas (vistas, título...) de vídeos por su ID,
+ * SIN importar de qué canal sean. Se usa para las colaboraciones de
+ * MANUAL_COLLABS que están subidas en otro canal — así su número de
+ * vistas en el ranking es real y se actualiza solo, no un dato fijo.
+ * @param {string[]} videoIds
+ */
+async function ytGetVideoStatsById(videoIds) {
+  if (!videoIds || !videoIds.length) return [];
+
+  const url = `https://www.googleapis.com/youtube/v3/videos` +
+    `?part=snippet,statistics&id=${videoIds.join(",")}` +
+    `&key=${YT_CONFIG.apiKey}`;
+
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`YouTube API (videos): ${res.status}`);
+  const data = await res.json();
+
+  return (data.items || []).map(item => ({
+    id: item.id,
+    title: item.snippet.title,
+    views: parseInt(item.statistics?.viewCount || "0", 10),
+    url: `https://www.youtube.com/watch?v=${item.id}`
+  }));
 }

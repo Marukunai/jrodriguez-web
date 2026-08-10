@@ -48,6 +48,7 @@
 
   <script src="public/nav.js"></script>
   <script src="public/youtube.js"></script>
+  <script src="public/collabs.js"></script>
   <script>
     /* Se usa solo si la YouTube API falla o la key aún no está puesta,
        para que la página nunca se quede vacía. */
@@ -82,7 +83,7 @@
             </iframe>
           </div>
           <div class="release-body">
-            <div class="release-meta">YouTube · ${formatDate(item.publishedAt)}</div>
+            <div class="release-meta">YouTube · ${formatDate(item.publishedAt)}${item.withArtist ? ` · con ${item.withArtist}` : ""}</div>
             <h3>${item.title}</h3>
             <div class="release-actions">
               <a class="yt" href="${item.url}" target="_blank" rel="noopener">Ver en YouTube</a>
@@ -109,7 +110,16 @@
         console.warn("No se pudo conectar con la YouTube API, mostrando vídeos de respaldo:", err.message);
         videos = FALLBACK_RELEASES;
       }
-      grid.innerHTML = videos.map(renderCard).join("");
+
+      // Mezcla con las colaboraciones de public/collabs.js (sin duplicar
+      // si algún id ya coincidiera) y ordena todo por fecha.
+      const seen = new Set(videos.map(v => v.id));
+      const extras = MANUAL_COLLABS.filter(v => !seen.has(v.id));
+      const all = [...videos, ...extras].sort(
+        (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)
+      );
+
+      grid.innerHTML = all.map(renderCard).join("");
     }
 
     function formatCountdown(iso) {
