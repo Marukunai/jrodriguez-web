@@ -98,3 +98,88 @@ la web, antes de subirlos comprueba que no traigan de vuelta estos
 
 Si ves alguno de esos textos literales en un archivo que vas a subir,
 significa que hay que rellenarlo antes.
+
+---
+
+## 7. Si algún día cambiáis el nombre del repositorio (dominio)
+
+Ahora mismo la web vive en:
+```
+https://marukunai.github.io/jrodriguez-web/
+```
+
+Si en algún momento renombráis el repo (por ejemplo a `jrodriguezmusic`,
+para que quede `https://marukunai.github.io/jrodriguezmusic/`), **no
+basta con renombrarlo en GitHub** — varios archivos tienen esa URL
+completa escrita a mano (no como ruta relativa), así que hay que tocarlos
+también. Esto NO aplica si conseguís un dominio propio de verdad (tipo
+`jrodriguezmusic.com`); eso es un cambio distinto y más grande, no lo
+cubre esta sección.
+
+### Paso a paso
+
+**1. Renombra el repo en GitHub**
+Settings → General → Repository name → nuevo nombre. GitHub deja un
+redirect automático desde la URL vieja durante un tiempo, pero no es
+permanente — hay que actualizar todo lo de abajo igualmente para que
+quede bien del todo.
+
+**2. Actualiza la restricción de la API key de YouTube**
+En [Google Cloud Console](https://console.cloud.google.com/) → Credenciales
+→ tu API key → Restricciones de sitios web. Cambia:
+```
+https://marukunai.github.io/jrodriguez-web/*
+```
+por:
+```
+https://marukunai.github.io/NUEVO-NOMBRE/*
+```
+Si no haces esto, el vídeo automático y el ranking de YouTube dejan de
+funcionar en cuanto cambie la URL (aunque el resto de la web siga viva).
+
+**3. Cambia la URL en los archivos del código**
+Estos 9 archivos tienen `jrodriguez-web` escrito literalmente y hay que
+sustituirlo por el nombre nuevo en cada uno:
+
+| Archivo | Qué tiene que cambiar |
+|---|---|
+| `404.html` | Las 10 rutas que empiezan por `/jrodriguez-web/` (favicon, CSS, menú, botón "Volver al inicio", script) |
+| `index.html` | `og:image`, `og:url`, las 3 líneas del bloque de datos estructurados (JSON-LD), y los 2 enlaces de compartir en WhatsApp/X (ojo, ahí la URL va codificada dentro del enlace) |
+| `novedades.html` | `og:image` y `og:url` |
+| `newsletter.html` | `og:image` y `og:url` |
+| `contacto.html` | `og:image` y `og:url` |
+| `eventos.html` | `og:image` y `og:url` |
+| `prensa.html` | `og:image` y `og:url` |
+| `robots.txt` | La línea `Sitemap:` |
+| `sitemap.xml` | Las 4 URLs listadas (una por página) |
+
+`privacidad.html` no necesita ningún cambio — no menciona la URL en
+ningún sitio.
+
+La forma más rápida de hacerlo bien: pide ayuda para hacer un
+"buscar y reemplazar" de `jrodriguez-web` por el nombre nuevo en todos
+esos archivos a la vez, en vez de ir uno a uno a mano (es fácil dejarse
+alguna línea suelta).
+
+**4. Vuelve a verificar la web en Google Search Console**
+Search Console trata cada URL como una propiedad distinta — hay que
+añadir la nueva URL como propiedad nueva, verificarla otra vez (te dará
+un nuevo archivo `google...html` para subir, sustituyendo al actual), y
+volver a enviar el `sitemap.xml` ya actualizado ahí dentro.
+
+### Esto NO hace falta tocarlo
+
+- **GoatCounter** (estadísticas) — el script no lleva la ruta del repo
+  escrita, sigue funcionando solo.
+- **Los enlaces internos entre páginas** (el menú, los botones de "Ver
+  en YouTube", etc.) — todos usan rutas relativas tipo `href="index.html"`,
+  sin la URL completa, así que no dependen del nombre del repo.
+- **Formspree** — los dos formularios (Contacto y Newsletter) siguen
+  funcionando igual, no están ligados a la URL de la web.
+
+### Resumen mental
+
+Si algo tiene escrita la palabra **"jrodriguez-web"** entera dentro del
+código → hay que cambiarla. Si un enlace es corto y relativo (tipo
+`href="novedades.html"`, sin `https://` delante) → no hay que tocarlo,
+sigue funcionando solo.
